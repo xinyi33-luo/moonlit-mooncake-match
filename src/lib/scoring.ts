@@ -20,7 +20,7 @@ export function computeScores(answers: Answers): Record<PersonaKey, number> {
     const scores = optionScores(qid, answers[qid]!);
     if (!scores) return;
     PERSONA_ORDER.forEach((key, i) => {
-      totals[key] += scores[i];
+      totals[key] += scores[i] ?? 0;
     });
   });
   return totals;
@@ -39,9 +39,9 @@ export function resolveResult(answers: Answers): PersonaKey {
     if (!answer) continue;
     const scores = optionScores(qid, answer);
     if (!scores) continue;
-    const best = Math.max(...candidates.map((k) => scores[PERSONA_ORDER.indexOf(k)]));
-    candidates = candidates.filter((k) => scores[PERSONA_ORDER.indexOf(k)] === best);
+    const best = Math.max(...candidates.map((k) => scores[PERSONA_ORDER.indexOf(k)] ?? 0));
+    candidates = candidates.filter((k) => (scores[PERSONA_ORDER.indexOf(k)] ?? 0) === best);
   }
 
-  return candidates[0];
+  return candidates[0] ?? "G";
 }
