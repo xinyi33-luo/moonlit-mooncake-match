@@ -64,6 +64,7 @@ function Index() {
         {stage === "home" && <HomeScreen onStart={() => setStage("quiz")} />}
         {stage === "quiz" && (
           <QuestionScreen
+            key={question.id}
             question={question}
             index={step}
             onSelect={(key) => handleSelect(question.id, key)}
